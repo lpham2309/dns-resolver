@@ -1,0 +1,3 @@
+/Users/lampham/dns-resolver/cmake-build-debug/CMakeFiles/dns_resolver.dir
+/Users/lampham/dns-resolver/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/lampham/dns-resolver/cmake-build-debug/CMakeFiles/rebuild_cache.dir
