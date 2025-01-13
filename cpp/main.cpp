@@ -183,14 +183,14 @@ public:
             query.insert(query.end(), dns_header.begin(), dns_header.end());
             query.insert(query.end(), dns_question.begin(), dns_question.end());
 
-            if(sendto(socket_fd, reinterpret_cast<char*>(query.data()), query.size(), 0, reinterpret_cast<struct sockaddr*>(&server_address), sizeof(server_address)) < 0) {
+            if(sendto(socket_fd, query.data(), query.size(), 0, reinterpret_cast<sockaddr*>(&server_address), sizeof(server_address)) < 0) {
                 throw std::runtime_error("Error sending query");
             }
             std::vector<uint8_t> response(2048);
             struct sockaddr_in from;
             socklen_t fromlen = sizeof(from);
 
-            int received_payload = recvfrom(socket_fd, reinterpret_cast<char*>(response.data()), response.size(), 0, reinterpret_cast<struct sockaddr*>(&from), &fromlen);
+            int received_payload = recvfrom(socket_fd, response.data(), response.size(), 0, reinterpret_cast<struct sockaddr*>(&from), &fromlen);
 
             if(received_payload < 0) {
                 throw std::runtime_error("Error receiving response");
@@ -209,7 +209,7 @@ public:
 int main() {
     try {
         DNSResolver resolver;
-        std::string domain = "google.com";
+        std::string domain;
 
         while(true) {
             std::cout << "Please enter domain name to resolve (type 'exit' to quit): ";
